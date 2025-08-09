@@ -1,0 +1,14 @@
+{
+  "default": {
+    "font_name": "Arial",
+    "font_size": 34,
+    "text_box_margin": {
+      "top": 60,
+      "bottom": 60,
+      "left": 60,
+      "right": 60
+    },
+    "verse_format": "{book} {chapter}:{verse}\n{text}"
+  }
+}
+
