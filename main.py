@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import sys
 from tkinter import Tk, Label, Entry, Button, StringVar, OptionMenu, messagebox
 from tkinter.filedialog import askopenfilename
 from pptx import Presentation
@@ -8,13 +9,23 @@ from pptx.util import Inches, Pt
 from pptx.enum.text import MSO_AUTO_SIZE
 from utils.book_map import book_map, ALL_BOOK_NAMES
 
-# === Load Slide Formatting ===
-with open(os.path.join("template", "slide_format.json"), encoding="utf-8") as f:
+def resource_path(relative_path):
+    """Return correct path whether running as script or .exe."""
+    if getattr(sys, 'frozen', False):  
+        # Running inside PyInstaller bundle
+        base_path = sys._MEIPASS
+    else:
+        # Running in normal Python environment
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+with open(resource_path("template/slide_format.json"), encoding="utf-8") as f:
     slide_style = json.load(f)["default"]
 
-# === Load the Bible JSON ===
-with open("bible_data/bible_combined.json", "r", encoding="utf-8") as f:
+with open(resource_path("bible_data/bible_combined.json"), encoding="utf-8") as f:
     bible = json.load(f)
+
 
 target_ppt_path = None
 
@@ -88,7 +99,7 @@ def generate_ppt():
             slide = prs.slides.add_slide(prs.slide_layouts[5])
             left = Inches(1.0)
             top_inch = Inches(2.0)
-            width = Inches(11.33)
+            width = Inches(11.33) 
             height = Inches(4.5)
 
             textbox = slide.shapes.add_textbox(left, top_inch, width, height)
